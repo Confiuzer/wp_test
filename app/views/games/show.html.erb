@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<div class="images_row">
+  <% @game.images.each_slice(2) do |images| %>
+    <div class="image_column">
+      <% images.each do |image| %>
+          <%= image_tag image, class: 'image' %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<%= link_to 'Edit', edit_game_path(@game) %> |
+<%= link_to 'Back', games_path %>
