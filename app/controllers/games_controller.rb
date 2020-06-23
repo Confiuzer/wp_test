@@ -1,24 +1,9 @@
 class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy]
 
-  # GET /games
-  # GET /games.json
-  def index
-    @games = Game.all
-  end
-
   # GET /games/1
   # GET /games/1.json
   def show
-  end
-
-  # GET /games/new
-  def new
-    @game = Game.new
-  end
-
-  # GET /games/1/edit
-  def edit
   end
 
   # POST /games
@@ -28,25 +13,10 @@ class GamesController < ApplicationController
 
     respond_to do |format|
       if @game.save
-        format.html { redirect_to @game, notice: 'Game was successfully created.' }
-        format.json { render :show, status: :created, location: @game }
+        @game.build_play.save
+        format.html { redirect_to play_game_path(id: @game.id), notice: 'Game ready to play.' }
       else
-        format.html { render :new }
-        format.json { render json: @game.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /games/1
-  # PATCH/PUT /games/1.json
-  def update
-    respond_to do |format|
-      if @game.update(game_params)
-        format.html { redirect_to @game, notice: 'Game was successfully updated.' }
-        format.json { render :show, status: :ok, location: @game }
-      else
-        format.html { render :edit }
-        format.json { render json: @game.errors, status: :unprocessable_entity }
+        format.html { redirect_to root_path }
       end
     end
   end
@@ -69,6 +39,6 @@ class GamesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def game_params
-      params.require(:game).permit(images: [])
+      params.require(:game).permit(:play_id, images: [])
     end
 end

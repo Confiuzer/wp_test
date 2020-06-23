@@ -5,7 +5,9 @@ class HomeController < ApplicationController
     @game = Game.new
   end
 
-  def start_game
+  def play_game
+    @game = Game.find(params[:id])
+    @play = @game.play
   end
 
 end

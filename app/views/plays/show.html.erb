@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Tick:</strong>
+  <%= @play.tick %>
+</p>
+
+<p>
+  <strong>Image url:</strong>
+  <%= @play.image_url %>
+</p>
+
+<p>
+  <strong>Game:</strong>
+  <%= @play.game_id %>
+</p>
+
+<%= link_to 'Edit', edit_play_path(@play) %> |
+<%= link_to 'Back', plays_path %>
