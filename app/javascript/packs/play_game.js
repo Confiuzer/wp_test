@@ -17,7 +17,7 @@ function timerFunction() {
 function showImage() {
   currentImage = images[10 - counter];
   var element = document.getElementById('image-holder');
-  element.style.display = 'block';
+  element.style.display = '';
   element.src = currentImage;
 }
 

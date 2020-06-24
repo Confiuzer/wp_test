@@ -1,10 +1,18 @@
-<h1>Games Played</h1>
-
-  <ul>
-    <% @games.each do |game| %>
-      <li><%= game.created_at.strftime("%B %d, %Y") %></li>
-    <% end %>
-  </ul>
-
-  <p>Please upload the images to play with in your next game:</p>
-  <%= render 'games/form', game: @game %>
+<div class="container">
+  <div class="row">
+    <div class="col-12 m-4">
+      <h1 class="text-center">Games Played</h1>
+    </div>
+    <div class="col-6">
+      <ul>
+        <% @games.each do |game| %>
+          <li><%= game.created_at.strftime("%B %d, %Y") %></li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="col-6">
+      <p>Please upload the images to play with in your next game:</p>
+      <%= render 'games/form', game: @game %>
+    </div>
+  </div>
+</div>
