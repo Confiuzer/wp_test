@@ -7,7 +7,6 @@ class HomeController < ApplicationController
 
   def play_game
     @game = Game.find(params[:id])
-    @play = @game.play
   end
 
 end

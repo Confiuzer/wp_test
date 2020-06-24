@@ -1,6 +1,8 @@
 
 var counter = 10;
 var gameId = document.getElementsByClassName('game')[0].id;
+var currentImage = '';
+
 window.onload = getRandomImages;
 
 
@@ -13,9 +15,10 @@ function timerFunction() {
 }
 
 function showImage() {
+  currentImage = images[10 - counter];
   var element = document.getElementById('image-holder');
   element.style.display = 'block';
-  element.src = images[10 - counter];
+  element.src = currentImage;
 }
 
 function verifyImagesLength() {
@@ -28,6 +31,17 @@ function verifyImagesLength() {
     }
   }
 }
+
+function addToPlaysTable(play) {
+  var table = document.getElementById("plays-table");
+  var row = table.insertRow(1); // Insert it right after the table header
+  var cell1 = row.insertCell(0);
+  var cell2 = row.insertCell(1);
+  cell1.innerHTML = play.tick;
+  cell2.innerHTML = "<a target='_blank' href=" + play.image_url + "><img src=" + play.image_url + " width='100' height='100'></a>";
+}
+
+
 
 
 var images = [];
@@ -53,29 +67,25 @@ function getRandomImages() {
 }
 
 
-// window.postPlay = function() {
-//   var ajaxPostPlay = new XMLHttpRequest();
-//   ajaxPostPlay.setRequestHeader("Content-Type", "application/json");
-//   ajaxPostPlay.onreadystatechange = function(){
+window.postPlay = function() {
+  var token = document.querySelector('meta[name="csrf-token"]').content;
+  var ajaxPostPlay = new XMLHttpRequest();
+  ajaxPostPlay.onreadystatechange = function(){
 
-//     if(ajaxPostPlay.readyState == 4){
-//       //the request is completed, now check its status
-//       if(ajaxPostPlay.status == 200){
-//         document.getElementById("results").innerHTML = ajaxPostPlay.responseText;
-//         console.log('Succesfully uploaded the images.');
-//         console.log(ajaxPostPlay.responseText);
-//       }
-//       else{
-//         console.log("Status error: " + ajaxPostPlay.status);
-//       }
-//     }
-//     else{
-//       console.log("Ignored readyState: " + ajaxPostPlay.readyState);
-//     }
-
-
-//   }
-//   ajaxPostPlay.open('POST', '/games');
-//   ajaxPostPlay.send(JSON.stringify({name:"", time:"2pm"}));
-// }
+    if(ajaxPostPlay.readyState == 4){
+      //the request is completed, now check its status
+      if(ajaxPostPlay.status == 201){
+        result = JSON.parse(ajaxPostPlay.responseText);
+        addToPlaysTable(result);
+      }
+      else{
+        console.log("Status error: " + ajaxPostPlay.status);
+      }
+    }
+  }
+  ajaxPostPlay.open('POST', '/plays');
+  ajaxPostPlay.setRequestHeader("Content-Type", "application/json");
+  ajaxPostPlay.setRequestHeader('X-CSRF-Token', token);
+  ajaxPostPlay.send(JSON.stringify({tick: counter, image_url: currentImage, game_id: gameId}));
+}
 

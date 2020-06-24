@@ -27,7 +27,6 @@ class GamesController < ApplicationController
 
     respond_to do |format|
       if @game.save
-        @game.build_play.save
         format.html { redirect_to play_game_path(id: @game.id), notice: 'Game ready to play.' }
       else
         format.html { redirect_to root_path }

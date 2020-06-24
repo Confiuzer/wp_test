@@ -1,0 +1,13 @@
+
+<table id="plays-table">
+  <tr>
+    <th>Timer</th>
+    <th>Image Url</th>
+  </tr>
+  <% @game.plays.each do |play| %>
+    <tr>
+      <td><%= play.tick %></td>
+      <td><%= link_to (image_tag play.image_url, size: "100x100"), play.image_url, target: "_blank" %></td>
+    </tr>
+  <% end %>
+</table>

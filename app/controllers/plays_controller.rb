@@ -6,12 +6,14 @@ class PlaysController < ApplicationController
   def show
   end
 
-  # PATCH/PUT /plays/1
-  # PATCH/PUT /plays/1.json
-  def update
+ # POST /plays
+  # POST /plays.json
+  def create
+    @play = Play.new(play_params)
+
     respond_to do |format|
-      if @play.update(play_params)
-        format.json { render :show, status: :ok, location: @play }
+      if @play.save
+        format.json { render :show, status: :created, location: @play }
       else
         format.json { render json: @play.errors, status: :unprocessable_entity }
       end

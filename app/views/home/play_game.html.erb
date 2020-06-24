@@ -2,8 +2,11 @@
 
 <h1 id="timer"></h1>
 
-<button id="add-btn" onclick="getRandomImages()">Click me!</button>
+<button id="add-btn" onclick="postPlay()">Click me!</button>
 
 <img src="" id="image-holder" width="300" height="300" style="display:none;">
+
+<%= render 'plays/plays_table' %>
+
 
 <%= javascript_pack_tag 'play_game' %>
